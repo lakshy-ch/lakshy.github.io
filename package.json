@@ -1,0 +1,51 @@
+{
+  "name": "lakshy-portfolio",
+  "version": "1.0.0",
+  "description": "Futuristic Web5 Personal Portfolio for Lakshy - AI Researcher & Ph.D. Student",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "framer-motion": "^10.16.0",
+    "three": "^0.158.0",
+    "@react-three/fiber": "^8.15.0",
+    "@react-three/drei": "^9.88.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "lucide-react": "^0.292.0",
+    "react-intersection-observer": "^9.5.0",
+    "react-use": "^17.4.0",
+    "framer-motion": "^10.16.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-spring": "^9.7.3",
+    "react-use-gesture": "^9.1.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/three": "^0.158.0",
+    "typescript": "^5.2.0",
+    "eslint": "^8.51.0",
+    "eslint-config-next": "^14.0.0"
+  },
+  "keywords": [
+    "web5",
+    "portfolio",
+    "ai",
+    "research",
+    "futuristic",
+    "korean",
+    "phd"
+  ],
+  "author": "Lakshy",
+  "license": "MIT"
+} 

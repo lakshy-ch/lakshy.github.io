@@ -1,0 +1,25 @@
+# Ignore node modules (for JS/React/Next.js projects)
+node_modules/
+
+# Ignore logs
+*.log
+
+# Ignore build output
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/editor settings
+.vscode/
+.idea/
+
+# Env files
+.env
+.env.local
+
+# Ignore backup files
+*.bak
+*.tmp
