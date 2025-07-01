@@ -26,6 +26,22 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`${inter.className} bg-matte-black text-white overflow-x-hidden`}>
+        <div className="global-animated-bg">
+          {[...Array(24)].map((_, i) => (
+            <div
+              key={i}
+              className="particle"
+              style={{
+                width: `${Math.random() * 32 + 12}px`,
+                height: `${Math.random() * 32 + 12}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                background: `radial-gradient(circle at 50% 50%, ${i % 4 === 0 ? '#ff006e' : i % 4 === 1 ? '#8338ec' : i % 4 === 2 ? '#06ffa5' : '#3a86ff'} 0%, transparent 80%)`,
+                animationDelay: `${Math.random() * 8}s`,
+              }}
+            />
+          ))}
+        </div>
         {children}
       </body>
     </html>

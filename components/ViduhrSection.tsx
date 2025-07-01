@@ -12,14 +12,40 @@ export default function ViduhrSection() {
     { from: 'viduhr', text: 'Hello, I am Viduhr, your AI assistant. How can I help you today?' }
   ])
   const [input, setInput] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!input.trim()) return
     setMessages([...messages, { from: 'user', text: input }])
     setInput('')
-    setTimeout(() => {
-      setMessages(msgs => [...msgs, { from: 'viduhr', text: 'Processing your request...' }])
-    }, 1000)
+    setLoading(true)
+    try {
+      // Call OpenAI's free API endpoint (replace with your own key for production)
+      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer sk-demo-key` // <-- Replace with your own OpenAI key for real use
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { role: 'system', content: 'You are Viduhr, a helpful, futuristic AI assistant for students.' },
+            ...messages.filter(m => m.from !== 'viduhr').map(m => ({ role: m.from === 'user' ? 'user' : 'assistant', content: m.text })),
+            { role: 'user', content: input }
+          ],
+          max_tokens: 80,
+          temperature: 0.7
+        })
+      })
+      if (!res.ok) throw new Error('API error')
+      const data = await res.json()
+      const reply = data.choices?.[0]?.message?.content || 'Sorry, I could not get a response.'
+      setMessages(msgs => [...msgs, { from: 'viduhr', text: reply }])
+    } catch (e) {
+      setMessages(msgs => [...msgs, { from: 'viduhr', text: 'Sorry, there was an error connecting to the AI.' }])
+    }
+    setLoading(false)
   }
 
   return (
@@ -90,6 +116,13 @@ export default function ViduhrSection() {
                 </div>
               </div>
             ))}
+            {loading && (
+              <div className="mb-2 flex justify-start">
+                <div className="px-4 py-2 rounded-lg max-w-xs bg-glass-dark text-emerald-green">
+                  <span className="loading-dots"></span>
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex items-center space-x-2">
             <input
@@ -99,12 +132,14 @@ export default function ViduhrSection() {
               onKeyDown={e => e.key === 'Enter' && handleSend()}
               className="flex-1 px-4 py-2 rounded-lg bg-glass-dark text-white cyber-text focus:outline-none"
               placeholder="Type your message..."
+              disabled={loading}
             />
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={handleSend}
               className="px-4 py-2 bg-emerald-green text-black rounded-lg font-bold cyber-text"
+              disabled={loading}
             >
               <MessageCircle size={20} />
             </motion.button>

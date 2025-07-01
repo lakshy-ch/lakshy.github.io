@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ChevronDown, Brain, Globe, Code } from 'lucide-react'
+import { ChevronDown, Brain, Globe, Code, User } from 'lucide-react'
 
 export default function HeroSection() {
   const scrollToNext = () => {
@@ -11,118 +11,124 @@ export default function HeroSection() {
     }
   }
 
+  // Animation variants
+  const container = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  }
+  const fadeUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: 'easeOut' } },
+  }
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-matte-black via-deep-gray to-matte-black"></div>
-        <div className="absolute top-0 left-0 w-full h-full">
-          {[...Array(50)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-electric-purple rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
-        </div>
+      {/* Animated layered gradients */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-neon-red via-electric-purple to-transparent opacity-30 blur-3xl animate-pulse" />
+        <div className="absolute top-1/2 right-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-emerald-green via-cyber-blue to-transparent opacity-20 blur-2xl animate-spin-slow" />
+      </div>
+      {/* Animated background particles */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {[...Array(30)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1.5 h-1.5 rounded-full bg-electric-purple opacity-60"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, Math.random() * 40 - 20, 0],
+              opacity: [0.6, 1, 0.6],
+            }}
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
       </div>
 
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-        {/* Main greeting */}
+      <motion.div
+        className="relative z-10 w-full max-w-4xl mx-auto px-4 flex flex-col items-center"
+        variants={container}
+        initial="hidden"
+        animate="show"
+      >
+        {/* Glowing Avatar */}
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="mb-8"
+          variants={fadeUp}
+          className="mb-8 flex flex-col items-center"
         >
-          <h1 className="cyber-text text-5xl md:text-7xl lg:text-8xl font-bold mb-6">
-            <span className="gradient-text">Hello,</span>
-            <br />
-            <span className="text-white">I am</span>
-            <br />
-            <span className="gradient-text">Lakshy</span>
-          </h1>
+          <div className="w-32 h-32 rounded-full bg-glass-effect flex items-center justify-center neon-glow-purple shadow-2xl mb-4 animate-float relative">
+            <User size={64} className="text-electric-purple" />
+            <div className="absolute inset-0 rounded-full border-4 border-electric-purple animate-pulse pointer-events-none" />
+          </div>
+          <span className="cyber-text text-lg text-gray-400 tracking-widest uppercase">GKS Scholar & AI Researcher</span>
         </motion.div>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 1 }}
-          className="text-xl md:text-2xl text-gray-300 mb-8 cyber-text"
-        >
-          GKS Scholar • Ph.D. Student • AI Researcher
-        </motion.p>
+        {/* Main greeting */}
+        <motion.div variants={fadeUp} className="mb-6 text-center">
+          <h1 className="cyber-text text-5xl md:text-7xl lg:text-8xl font-extrabold mb-4 gradient-text drop-shadow-lg">
+            <motion.span initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}>
+              Hello, I am
+            </motion.span>
+            <br />
+            <motion.span initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.8 }}>
+              Lakshy
+            </motion.span>
+          </h1>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.8 }} className="text-xl md:text-2xl text-gray-300 mb-2 cyber-text">
+            Ph.D. Student @ Kunsan National University
+          </motion.p>
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8, duration: 0.8 }} className="text-lg text-gray-400 mb-4">
+            AI | Web5 | Neuro-AI | Korean Studies | Futuristic UI
+          </motion.p>
+        </motion.div>
 
         {/* Specializations */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="flex flex-wrap justify-center gap-6 mb-12"
+          variants={fadeUp}
+          className="flex flex-wrap justify-center gap-6 mb-10"
         >
           <div className="flex items-center space-x-2 text-emerald-green">
-            <Brain size={24} />
+            <Brain size={28} />
             <span className="cyber-text">Neuro-AI</span>
           </div>
           <div className="flex items-center space-x-2 text-neon-red">
-            <Globe size={24} />
+            <Globe size={28} />
             <span className="cyber-text">Web5</span>
           </div>
           <div className="flex items-center space-x-2 text-electric-purple">
-            <Code size={24} />
+            <Code size={28} />
             <span className="cyber-text">Facial Analysis</span>
           </div>
         </motion.div>
 
-        {/* Location and languages */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="mb-12"
-        >
-          <p className="text-gray-400 mb-2">
-            <span className="korean-text">📍 Kunsan National University, South Korea</span>
-          </p>
-          <p className="text-gray-400">
-            <span className="korean-text">🌐 English • Hindi • 한국어</span>
-          </p>
-        </motion.div>
-
         {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          variants={fadeUp}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
         >
           <motion.button
-            whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(131, 56, 236, 0.5)' }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.08, boxShadow: '0 0 40px #8338ec' }}
+            whileTap={{ scale: 0.96 }}
             onClick={scrollToNext}
-            className="px-8 py-4 bg-gradient-to-r from-electric-purple to-neon-red rounded-lg font-bold cyber-text neon-glow-purple hover:neon-glow-red transition-all duration-300"
+            className="px-10 py-4 bg-gradient-to-r from-electric-purple to-neon-red rounded-xl font-bold cyber-text neon-glow-purple hover:neon-glow-red transition-all duration-300 text-lg shadow-lg"
           >
             Explore My World
           </motion.button>
-          
           <motion.a
             href="#viduhr"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 border-2 border-emerald-green text-emerald-green rounded-lg font-bold cyber-text hover:bg-emerald-green hover:text-black transition-all duration-300"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.96 }}
+            className="px-10 py-4 border-2 border-emerald-green text-emerald-green rounded-xl font-bold cyber-text hover:bg-emerald-green hover:text-black transition-all duration-300 text-lg shadow-lg"
           >
             Meet Viduhr AI
           </motion.a>
@@ -130,21 +136,19 @@ export default function HeroSection() {
 
         {/* Scroll indicator */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.5, duration: 1 }}
+          variants={fadeUp}
           className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
         >
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={{ y: [0, 16, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
             onClick={scrollToNext}
             className="cursor-pointer"
           >
-            <ChevronDown size={32} className="text-gray-400 hover:text-white transition-colors" />
+            <ChevronDown size={36} className="text-electric-purple hover:text-neon-red transition-colors" />
           </motion.div>
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   )
 } 

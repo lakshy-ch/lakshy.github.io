@@ -233,4 +233,45 @@
 
 section {
   scroll-snap-align: start;
+}
+
+.global-animated-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.global-animated-bg .particle {
+  position: absolute;
+  border-radius: 9999px;
+  opacity: 0.5;
+  filter: blur(2px);
+  animation: floatParticle 8s ease-in-out infinite alternate;
+}
+@keyframes floatParticle {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-40px) scale(1.2); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+.glass-effect, .glass-effect-dark {
+  transition: box-shadow 0.5s, transform 0.5s, background 0.5s;
+  will-change: transform, box-shadow;
+}
+.glass-effect:hover, .glass-effect-dark:hover {
+  transform: perspective(800px) rotateY(8deg) scale(1.03);
+  box-shadow: 0 8px 40px 0 rgba(131,56,236,0.25), 0 1.5px 8px 0 #06ffa5;
+  background: rgba(40,40,60,0.7);
+}
+
+.section-divider {
+  width: 100vw;
+  height: 32px;
+  background: linear-gradient(90deg, #8338ec 0%, #06ffa5 50%, #ff006e 100%);
+  opacity: 0.18;
+  filter: blur(6px);
+  margin: 0 auto;
+  border-radius: 9999px;
+  margin-bottom: -16px;
 } 
